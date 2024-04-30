@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalleAlbumActivity">
+
+        <!-- ImageVIew to display our Course Image -->
+        <ImageView
+            android:id="@+id/imvImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:contentDescription="@string/app_name"
+            android:padding="5dp" />
+
+        <!-- Text View to display Course Name -->
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/imvImage"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Text VIew to display Course Rating -->
+        <!-- Image used in present in drawable folder -->
+        <TextView
+            android:id="@+id/txtFecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtName"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@id/imvImage"
+            android:drawablePadding="2dp"
+            />
+
+</RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,13 +15,15 @@ import com.sena.listas.model.Album
 class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
     var albumes: MutableList<Album> = ArrayList()
     lateinit var context: Context
+    // Para poder hacer el onclick
+    lateinit var miListener: onItemClickListener
 
     // Constructor del recyclerViewAdapter
     fun RecyclerViewAdapter(albumes: MutableList<Album>, context: Context){
         this.albumes = albumes
         this.context = context
     }
-        class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+        class ViewHolder(view: View, listener: onItemClickListener): RecyclerView.ViewHolder(view) {
             val albumNombre = view.findViewById<TextView>(R.id.txtName)
             val albumFecha = view.findViewById<TextView>(R.id.txtFecha)
             val albumFoto = view.findViewById<ImageView>(R.id.imvImage)
@@ -34,10 +37,16 @@ class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(
             fun ImageView.loadImage(url:String){
                 Glide.with(context).load(url).into(this)
             }
+            // Cada item va a tener su propio setonclicklistener
+            init {
+                view.setOnClickListener {
+                    listener.onItemClickListener(bindingAdapterPosition)
+                }
+            }
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_album, parent, false))
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_album, parent, false), miListener)
     }
 
     override fun getItemCount(): Int {
@@ -47,5 +56,13 @@ class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = albumes.get(position)
         holder.bind(item, context)
+    }
+    // Para poder crear las clases onItemClickListener
+    interface onItemClickListener{
+        fun onItemClickListener(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener){
+        miListener = listener
     }
 }

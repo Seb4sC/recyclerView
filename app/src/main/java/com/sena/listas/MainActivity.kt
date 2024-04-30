@@ -1,5 +1,6 @@
 package com.sena.listas
 
+import android.content.Intent
 import android.icu.text.RelativeDateTimeFormatter.AbsoluteUnit
 import android.os.Bundle
 import android.util.Log
@@ -34,5 +35,17 @@ class MainActivity : AppCompatActivity() {
         miRecycler.layoutManager = LinearLayoutManager(this)
         miAdapter.RecyclerViewAdapter(DataSource().getAlbumes(), this)
         miRecycler.adapter = miAdapter
+        // Implementación del click en una de las card
+        miAdapter.setOnItemClickListener(object: RecyclerViewAdapter.onItemClickListener{
+            override fun onItemClickListener(position: Int) {
+                val intent = Intent(this@MainActivity, DetalleAlbumActivity::class.java)
+                intent.putExtra("imagen", DataSource().getAlbumes()[position].imagen)
+                intent.putExtra("album", DataSource().getAlbumes()[position].nombre)
+                intent.putExtra("fecha", DataSource().getAlbumes()[position].fecha)
+                startActivity(intent)
+                Log.d("Info Album", DataSource().getAlbumes()[position].toString())
+            }
+        })
+
     }
 }
