@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.sena.listas.R
 import com.sena.listas.model.Album
 
-class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-    var albumes: MutableList<Album> = ArrayList()
+class RecyclerViewAdapter(private var albumes: List<Album>): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+    //var albumes: MutableList<Album> = ArrayList()
     lateinit var context: Context
     // Para poder hacer el onclick
     lateinit var miListener: onItemClickListener
@@ -37,6 +37,7 @@ class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(
             fun ImageView.loadImage(url:String){
                 Glide.with(context).load(url).into(this)
             }
+
             // Cada item va a tener su propio setonclicklistener
             init {
                 view.setOnClickListener {
@@ -57,6 +58,13 @@ class RecyclerViewAdapter: RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(
         val item = albumes.get(position)
         holder.bind(item, context)
     }
+
+    // Para actualizar la lista con la búsqueda que se haga
+    fun actualizarLista(albumesList: MutableList<Album>){
+        this.albumes = albumesList
+        notifyDataSetChanged()
+    }
+
     // Para poder crear las clases onItemClickListener
     interface onItemClickListener{
         fun onItemClickListener(position: Int)
