@@ -20,6 +20,7 @@ import com.sena.listas.model.Album
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var miRecycler: RecyclerView
+    lateinit var miRecycler2: RecyclerView
     val miAdapter: RecyclerViewAdapter = RecyclerViewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,10 +32,14 @@ class MainActivity : AppCompatActivity() {
 
     fun cargarRecycler(){
         miRecycler = binding.rcvAlbumes
+        miRecycler2 = binding.rcvAlbumesHorizontal
         miRecycler.setHasFixedSize(true)
+        miRecycler2.setHasFixedSize(true)
         miRecycler.layoutManager = LinearLayoutManager(this)
+        miRecycler2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         miAdapter.RecyclerViewAdapter(DataSource().getAlbumes(), this)
         miRecycler.adapter = miAdapter
+        miRecycler2.adapter = miAdapter
         // Implementación del click en una de las card
         miAdapter.setOnItemClickListener(object: RecyclerViewAdapter.onItemClickListener{
             override fun onItemClickListener(position: Int) {
@@ -43,9 +48,8 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("album", DataSource().getAlbumes()[position].nombre)
                 intent.putExtra("fecha", DataSource().getAlbumes()[position].fecha)
                 startActivity(intent)
-                Log.d("Info Album", DataSource().getAlbumes()[position].toString())
+                //Log.d("Info Album", DataSource().getAlbumes()[position].toString())
             }
         })
-
     }
 }
